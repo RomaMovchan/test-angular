@@ -49,14 +49,14 @@ export class CountryAutocompleteComponent implements ControlValueAccessor, OnDes
     private renderer: Renderer2,
     private elementRef: ElementRef
   ) {
-    this.clickListener = renderer.listen('document', 'click', (event: MouseEvent) => this.handleGlobalClick(event))
+    this.clickListener = this.renderer.listen('document', 'click', (event: MouseEvent) => this.handleGlobalClick(event))
   }
 
   ngOnInit(): void {
     this.subscription = this.inputControl.valueChanges.subscribe(value => {
       this.updateValue(value);
       if (value) {
-        this.filteredOptions = this.options?.filter(option => option.toLowerCase().startsWith(value.toLowerCase()))
+        this.filteredOptions = this.options?.filter(option => option.toLowerCase().includes(value))
       } else {
         this.filteredOptions = [];
       }
