@@ -1,5 +1,5 @@
 <div class="">
-
+  {{ formArray.value | json }}
   <header>
     <button class="primary"
             [disabled]="!formArray.valid || !formArray.controls.length">Submit all forms</button>

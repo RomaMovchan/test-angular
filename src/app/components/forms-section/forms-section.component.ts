@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from "@angular/forms";
-import {NgForOf} from "@angular/common";
+import {JsonPipe, NgForOf} from "@angular/common";
 import {FormItemComponent} from "../form-item/form-item.component";
 
 type TestForm = FormGroup<{
@@ -20,7 +20,7 @@ type TestForm = FormGroup<{
 @Component({
   selector: 'app-forms-section',
   standalone: true,
-  imports: [ReactiveFormsModule, NgForOf, FormItemComponent],
+  imports: [ReactiveFormsModule, NgForOf, FormItemComponent, JsonPipe],
   templateUrl: './forms-section.component.html',
   styleUrl: './forms-section.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

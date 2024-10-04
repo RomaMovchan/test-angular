@@ -1,1 +1,13 @@
-<p>country-autocomplete works!</p>
+<div class="autocomplete">
+  <label for="country">Country</label>
+  <input type="text"
+         id="country"
+         placeholder="Enter country"
+         [formControl]="inputControl">
+  <ul *ngIf="isOpen">
+    <li *ngFor="let option of filteredOptions" (click)="selectItem(option)">
+      {{ option }}
+    </li>
+  </ul>
+</div>
+

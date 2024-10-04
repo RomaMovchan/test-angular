@@ -1,8 +1,7 @@
 <div class="form-section" >
   <span class="remove-item" (click)="removeItemChange.emit()">X</span>
   <div class="form-field">
-    <label for="country">Country</label>
-    <input formControlName="country" type="text" id="country" placeholder="Enter country">
+    <app-country-autocomplete formControlName="country" [options]="options"></app-country-autocomplete>
   </div>
 
   <div class="form-field">

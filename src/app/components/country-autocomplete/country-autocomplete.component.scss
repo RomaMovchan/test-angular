@@ -1,0 +1,22 @@
+.autocomplete {
+  position: relative;
+
+  ul {
+    background: #ffffff;
+    padding: 0;
+    list-style-type: none;
+    position: absolute;
+    width: 100%;
+    border: var(--color-text) solid 1px;
+    border-radius: 5px;
+
+    li {
+      cursor: pointer;
+      padding: 5px;
+
+      &:hover {
+        background: #cccccc;
+      }
+    }
+  }
+}

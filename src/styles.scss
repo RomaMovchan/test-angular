@@ -59,10 +59,10 @@ button[disabled] {
   pointer-events: none;
 }
 
-.ng-valid.ng-dirty:not(app-form-item) {
+.ng-valid.ng-dirty:not(app-form-item) input{
   border: 2px solid var(--color-success);
 }
 
-.ng-invalid.ng-dirty:not(app-form-item) {
+.ng-invalid.ng-dirty:not(app-form-item) input{
   border: 2px solid var(--color-error);
 }
