@@ -2,3 +2,67 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
+:root {
+  --color-primary: #0493B4FF;
+  --color-accent: #ff8888;
+
+  --color-success: #4caf50;
+  --color-error: #ff5722;
+  --color-background: #eceff1;
+  --color-text: #263238;
+  --spacing-step: 8px;
+}
+
+
+body, html, p, h1, h2, h3, h4, h5, span {
+  padding: 0;
+  margin: 0;
+}
+
+
+label {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: var(--color-text);
+  font-weight: bold;
+}
+
+button.primary {
+  margin-top: calc(var(--spacing-step) * 2);
+  background-color: var(--color-primary);
+  border: var(--color-primary) 1px solid;
+  color: var(--color-text);
+  font-weight: bold;
+  border-radius: 5px;
+
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+
+}
+
+input {
+  border: var(--color-text) solid 1px;
+  border-radius: 5px;
+  font-size: 18px;
+  padding: 10px 11px;
+  width: 100%;
+}
+
+button[disabled] {
+  background-color: rgba(0, 0, 0, 0.15);
+  border-color: rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+
+.ng-valid.ng-dirty:not(app-form-item) {
+  border: 2px solid var(--color-success);
+}
+
+.ng-invalid.ng-dirty:not(app-form-item) {
+  border: 2px solid var(--color-error);
+}

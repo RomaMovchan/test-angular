@@ -1,1 +1,24 @@
-<p>forms-section works!</p>
+<div class="">
+
+  <header>
+    <button class="primary"
+            [disabled]="!formArray.valid || !formArray.controls.length">Submit all forms</button>
+    <div>
+      <button class="primary"
+              [disabled]="formArray.controls.length >= 10"
+              (click)="addItem()">Add</button>
+    </div>
+
+
+  </header>
+  <main>
+    <ng-container *ngFor="let item of formArray.controls; index as i">
+      <app-form-item
+        [formGroup]="getFormGroup(item)"
+        (removeItemChange)="handleRemoveItem(i)">
+      </app-form-item>
+    </ng-container>
+
+  </main>
+
+</div>
