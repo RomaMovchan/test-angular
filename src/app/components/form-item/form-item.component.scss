@@ -1,0 +1,25 @@
+
+
+.form-section {
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: var(--color-background);
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+}
+
+
+.remove-item {
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  top: 3px;
+  color: black;
+  font-size: 28px;
+}
+
+.form-field {
+  margin-bottom: 10px;
+}
