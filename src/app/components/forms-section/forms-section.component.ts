@@ -80,7 +80,7 @@ export class FormsSectionComponent {
   }
 
   get invalidFormsLength(): number {
-    const invalidForms = this.formArray.controls.filter(c => c.invalid);
+    const invalidForms = this.formArray.controls.filter(c => c.invalid || c.pending);
     return invalidForms.length
   }
 

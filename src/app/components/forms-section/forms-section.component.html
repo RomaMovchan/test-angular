@@ -14,7 +14,7 @@
     </button>
     <ng-container *ngIf="formArray.dirty">
           <span class="input-error"
-                *ngIf="formArray.invalid">
+                *ngIf="formArray.invalid || formArray.pending">
             Invalid forms: <strong>{{ invalidFormsLength }}</strong>
           </span>
     </ng-container>
