@@ -8,13 +8,28 @@ import {
   ReactiveFormsModule,
   Validators
 } from "@angular/forms";
-import {JsonPipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, DatePipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {FormItemComponent} from "../form-item/form-item.component";
 import {currentDate, restrictedCountries} from "../../validators/validators";
 import {Country} from "../../shared/enum/country";
 import {NewUsernameValidator} from "../../services";
 import {HttpService} from "../../services";
 import {HttpClientModule} from "@angular/common/http";
+import {
+  async,
+  finalize,
+  interval,
+  map,
+  Observable, publishReplay,
+  share,
+  shareReplay,
+  take,
+  takeUntil,
+  takeWhile,
+  tap,
+  timer
+} from "rxjs";
+import {SubmitFormResponseData} from "../../shared/interface/responses";
 
 type TestForm = FormGroup<{
   country: FormControl<string>;
@@ -22,10 +37,12 @@ type TestForm = FormGroup<{
   birthday: FormControl<string>;
 }>;
 
+const TIMER = 5;
+
 @Component({
   selector: 'app-forms-section',
   standalone: true,
-  imports: [ReactiveFormsModule, NgForOf, FormItemComponent, JsonPipe, NgIf, HttpClientModule],
+  imports: [ReactiveFormsModule, NgForOf, FormItemComponent, NgIf, HttpClientModule, AsyncPipe, DatePipe],
   templateUrl: './forms-section.component.html',
   styleUrl: './forms-section.component.scss',
   providers: [ NewUsernameValidator ],
@@ -38,6 +55,7 @@ export class FormsSectionComponent {
 
   public formArray = new FormArray<TestForm>([]);
   public countries = Object.values(Country);
+  public timer$: Observable<number> | null = new Observable<number>();
 
   private registerFormGroup(): FormGroup {
     return this.fb.group({
@@ -82,21 +100,54 @@ export class FormsSectionComponent {
     return !this.formArray.valid || !this.formArray.controls.length
   }
 
-  submit() {
-    this.formArray.disable();
+  private startTimer(): void {
+    this.timer$ = timer(0, 1000)
+      .pipe(
+        share(),
+        map(n => (TIMER - n) * 1000),
 
-    this.httpService.post('submitForm', this.formArray.value).subscribe(data => {
-        console.log(data);
-        this.formArray.enable();
-    });
+        takeWhile(n => n >= 0),
+        finalize(() => {
+          this.stopTimer();
+          this.submitForm();
+        })
+      );
   }
 
-  cancel() {
+  private stopTimer(): void {
+    this.timer$ = null;
+  }
+
+  public submit(): void {
+    this.disableForms();
+    this.startTimer();
+  }
+
+  private disableForms(): void {
+    this.formArray.disable();
+  }
+
+  private enableForms(): void {
     this.formArray.enable();
   }
 
-  disable() {
-    this.formArray.disable();
+  public submitForm(): void {
+    this.httpService.post('submitForm', this.formArray.value)
+      .subscribe((data: SubmitFormResponseData) => {
+        this.formArray.enable();
+        this.resetForm();
+        alert(data.result);
+      });
   }
 
+  cancel(): void {
+    this.stopTimer();
+    this.enableForms();
+  }
+
+  resetForm() {
+    this.formArray.reset();
+    this.formArray.markAsPristine();
+    this.formArray.markAsUntouched();
+  }
 }

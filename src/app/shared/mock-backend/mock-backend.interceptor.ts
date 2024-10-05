@@ -17,7 +17,6 @@ export class MockBackendInterceptor implements HttpInterceptor {
   }
 
   private handleCheckUsername(req: HttpRequest<any>): Observable<HttpResponse<CheckUserResponseData>> {
-    console.log(req);
     const isAvailable = req.body.username.includes('new');
     const response = new HttpResponse({ status: 200, body: { isAvailable } });
 

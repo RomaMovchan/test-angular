@@ -36,7 +36,7 @@ export class CountryAutocompleteComponent implements ControlValueAccessor, OnDes
   public filteredOptions: string[] = [];
   public isOpen: boolean = false;
   private subscription: Subscription = new Subscription();
-  val: string = '';
+  @Input() val: string = '';
   public inputControl = new FormControl();
 
   clickListener: Function;
@@ -110,6 +110,10 @@ export class CountryAutocompleteComponent implements ControlValueAccessor, OnDes
   }
 
   writeValue(obj: string): void {
+    if (obj === null) {
+      this.selectItem('');
+      this.inputControl.markAsPristine();
+    }
     this.onChange(obj);
     this.ref.markForCheck();
   }
