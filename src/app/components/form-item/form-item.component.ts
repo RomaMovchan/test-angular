@@ -1,20 +1,15 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ControlContainer, FormGroupDirective, FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { CountryAutocompleteComponent } from "../country-autocomplete/country-autocomplete.component";
 import { NgIf } from "@angular/common";
+
 import { DynamicValidatorMessage } from "../../directives";
 import { OnTouchErrorStateMatcher } from "../../services";
+import { CountryAutocompleteComponent } from "../country-autocomplete/country-autocomplete.component";
 
 @Component({
   selector: 'app-form-item',
   standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CountryAutocompleteComponent,
-    NgIf,
-    DynamicValidatorMessage
-  ],
+  imports: [ FormsModule, ReactiveFormsModule, CountryAutocompleteComponent, NgIf, DynamicValidatorMessage ],
   templateUrl: './form-item.component.html',
   styleUrl: './form-item.component.scss',
   viewProviders: [

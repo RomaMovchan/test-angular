@@ -6,7 +6,7 @@ import { ErrorMessagePipe } from "./input-error.pipe";
 @Component({
   selector: 'input-error',
   standalone: true,
-  imports: [CommonModule, ErrorMessagePipe],
+  imports: [ CommonModule, ErrorMessagePipe ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div *ngFor="let error of errors | keyvalue; trackBy:trackByFn" class="input-error">

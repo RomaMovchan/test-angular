@@ -1,8 +1,9 @@
-import {ComponentRef, Directive, ElementRef, inject, Input, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
-import {ControlContainer, FormGroupDirective, NgControl, NgForm, NgModel} from "@angular/forms";
-import {EMPTY, filter, fromEvent, iif, merge, skip, startWith, Subscription} from "rxjs";
-import {ErrorStateMatcher} from "../services";
-import {InputErrorComponent} from "../components/input-error/input-error.component";
+import { ComponentRef, Directive, ElementRef, inject, Input, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { ControlContainer, FormGroupDirective, NgControl, NgForm, NgModel } from "@angular/forms";
+import { EMPTY, fromEvent, iif, merge, skip, startWith, Subscription} from "rxjs";
+
+import { ErrorStateMatcher } from "../services";
+import { InputErrorComponent } from "../components/input-error/input-error.component";
 
 @Directive({
   selector: `
@@ -55,7 +56,7 @@ export class DynamicValidatorMessage implements OnInit, OnDestroy {
     })
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.errorMessageTrigger?.unsubscribe();
   }
 }

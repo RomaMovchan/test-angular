@@ -8,28 +8,16 @@ import {
   ReactiveFormsModule,
   Validators
 } from "@angular/forms";
-import {AsyncPipe, DatePipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
-import {FormItemComponent} from "../form-item/form-item.component";
-import {currentDate, restrictedCountries} from "../../validators/validators";
-import {Country} from "../../shared/enum/country";
-import {NewUsernameValidator} from "../../services";
-import {HttpService} from "../../services";
-import {HttpClientModule} from "@angular/common/http";
-import {
-  async,
-  finalize,
-  interval,
-  map,
-  Observable, publishReplay,
-  share,
-  shareReplay,
-  take,
-  takeUntil,
-  takeWhile,
-  tap,
-  timer
-} from "rxjs";
-import {SubmitFormResponseData} from "../../shared/interface/responses";
+import { AsyncPipe, DatePipe, NgForOf, NgIf } from "@angular/common";
+
+import { HttpClientModule } from "@angular/common/http";
+import { finalize, map, Observable, share, takeWhile, timer } from "rxjs";
+import { SubmitFormResponseData } from "../../shared/interface/responses";
+import { FormItemComponent } from "../form-item/form-item.component";
+import { currentDate, restrictedCountries } from "../../validators/validators";
+import { Country } from "../../shared/enum/country";
+import { NewUsernameValidator } from "../../services";
+import { HttpService } from "../../services";
 
 type TestForm = FormGroup<{
   country: FormControl<string>;
@@ -42,7 +30,7 @@ const TIMER = 5;
 @Component({
   selector: 'app-forms-section',
   standalone: true,
-  imports: [ReactiveFormsModule, NgForOf, FormItemComponent, NgIf, HttpClientModule, AsyncPipe, DatePipe],
+  imports: [ ReactiveFormsModule, NgForOf, FormItemComponent, NgIf, HttpClientModule, AsyncPipe, DatePipe ],
   templateUrl: './forms-section.component.html',
   styleUrl: './forms-section.component.scss',
   providers: [ NewUsernameValidator ],

@@ -1,41 +1,35 @@
-<div class="">
-  <header>
-    <div>
-      <ng-container *ngIf="(timer$ | async) as timer; else noTimerView">
-        <button class="primary cancel submit-button"
-                (click)="cancel()">
-          Cancel
-        </button>
-        <span>{{ timer | date:'m:ss' }}</span>
-      </ng-container>
-
-      <ng-template #noTimerView>
-        <button class="primary submit-button"
-                [disabled]="isFormInvalid"
-                (click)="submit()">
-          Submit all forms
-        </button>
-        <ng-container *ngIf="formArray.dirty">
+<header>
+  <ng-container *ngIf="(timer$ | async) as timer; else noTimerView">
+    <button class="primary cancel submit-button"
+            (click)="cancel()">
+      Cancel
+    </button>
+    <span>{{ timer | date:'m:ss' }}</span>
+  </ng-container>
+  <ng-template #noTimerView>
+    <button class="primary submit-button"
+            [disabled]="isFormInvalid"
+            (click)="submit()">
+      Submit all forms
+    </button>
+    <ng-container *ngIf="formArray.dirty">
           <span class="input-error"
                 *ngIf="formArray.invalid">
             Invalid forms: <strong>{{ invalidFormsLength }}</strong>
           </span>
-        </ng-container>
-      </ng-template>
-    </div>
-
-  </header>
-  <main>
-    <ng-container *ngFor="let item of formArray.controls; index as i">
-      <app-form-item
-        [formGroup]="getFormGroup(item)"
-        [options]="countries"
-        (removeItemChange)="handleRemoveItem(i)">
-      </app-form-item>
     </ng-container>
-    <button class="add-button"
-            [disabled]="formArray.controls.length >= 10"
-            (click)="addItem()">+</button>
-  </main>
+  </ng-template>
+</header>
+<main>
+  <ng-container *ngFor="let item of formArray.controls; index as i">
+    <app-form-item
+      [formGroup]="getFormGroup(item)"
+      [options]="countries"
+      (removeItemChange)="handleRemoveItem(i)">
+    </app-form-item>
+  </ng-container>
+  <button class="add-button"
+          [disabled]="formArray.controls.length >= 10"
+          (click)="addItem()">+</button>
+</main>
 
-</div>

@@ -5,7 +5,8 @@
          placeholder="Enter country"
          [formControl]="inputControl">
   <ul *ngIf="isOpen">
-    <li *ngFor="let option of filteredOptions" (click)="selectItem(option)">
+    <li *ngFor="let option of filteredOptions"
+        (click)="selectItem(option)">
       {{ option }}
     </li>
   </ul>

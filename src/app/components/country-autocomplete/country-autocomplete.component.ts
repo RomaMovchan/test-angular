@@ -4,9 +4,9 @@ import {
   Input, OnDestroy, OnInit, Renderer2, ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from "@angular/forms";
-import {delay, distinctUntilChanged, Subscription, switchMap} from "rxjs";
+import { delay, distinctUntilChanged, Subscription, switchMap } from "rxjs";
 import { NgForOf, NgIf } from "@angular/common";
-import {HttpService} from "../../services";
+import { HttpService } from "../../services";
 
 @Component({
   selector: 'app-country-autocomplete',
@@ -53,15 +53,14 @@ export class CountryAutocompleteComponent implements ControlValueAccessor, OnDes
   }
 
   ngOnInit(): void {
-    /*
-      Not clear requirements about datasource of Countries. Regarding requirement:
+    /*Not clear requirements about datasource of Countries. Regarding requirement:
           "First input, Country should be a text input. While the user types, it should suggest values
            from the Country enum (src/app/shared/enum/country.ts). It should validate and not
            allow to submit forms with values not listed in the Country enum."
       datasource should be simple enum, but in the text mentioned datasource from /api/regions - method
       doesn't implemented on fakeBackend file.
       Two different types of implementation. Second option implemented using switchMap rxjs operator.
-      Solution comment but not tested
+      Solution was commented
      */
     this.subscription = this.inputControl.valueChanges
       .subscribe(value => {
