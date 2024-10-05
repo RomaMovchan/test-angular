@@ -1,11 +1,12 @@
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, ElementRef, HostBinding, HostListener,
+  Component, ElementRef, HostBinding, HostListener, inject,
   Input, OnDestroy, OnInit, Renderer2, ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from "@angular/forms";
-import { Subscription } from "rxjs";
+import {delay, distinctUntilChanged, Subscription, switchMap} from "rxjs";
 import { NgForOf, NgIf } from "@angular/common";
+import {HttpService} from "../../services";
 
 @Component({
   selector: 'app-country-autocomplete',
@@ -43,25 +44,46 @@ export class CountryAutocompleteComponent implements ControlValueAccessor, OnDes
 
   onChange: (newValue: string) => void = (): void => {};
   onTouch: () => void = (): void => {};
+  private ref: ChangeDetectorRef = inject(ChangeDetectorRef);
+  private renderer: Renderer2 = inject(Renderer2);
+  private elementRef: ElementRef = inject(ElementRef);
+  private httpService: HttpService = inject(HttpService);
 
-  constructor(
-    private ref: ChangeDetectorRef,
-    private renderer: Renderer2,
-    private elementRef: ElementRef
-  ) {
+  constructor() {
     this.clickListener = this.renderer.listen('document', 'click', (event: MouseEvent) => this.handleGlobalClick(event))
   }
 
   ngOnInit(): void {
-    this.subscription = this.inputControl.valueChanges.subscribe(value => {
-      this.updateValue(value);
-      if (value) {
-        this.filteredOptions = this.options?.filter(option => option.toLowerCase().includes(value.toLowerCase()))
-      } else {
-        this.filteredOptions = [];
-      }
-      this.isOpen = Boolean(this.filteredOptions.length > 0);
-    });
+    /*
+      Not clear requirements about datasource of Countries. Regarding requirement:
+          "First input, Country should be a text input. While the user types, it should suggest values
+           from the Country enum (src/app/shared/enum/country.ts). It should validate and not
+           allow to submit forms with values not listed in the Country enum."
+      datasource should be simple enum, but in the text mentioned datasource from /api/regions - method
+      doesn't implemented on fakeBackend file.
+      Two different types of implementation. Second option implemented using switchMap rxjs operator.
+      Solution comment but not tested
+     */
+    this.subscription = this.inputControl.valueChanges
+      .subscribe(value => {
+        this.updateValue(value);
+        if (value) {
+          this.filteredOptions = this.options?.filter(option => option.toLowerCase().includes(value.toLowerCase()))
+        } else {
+          this.filteredOptions = [];
+        }
+        this.isOpen = Boolean(this.filteredOptions.length > 0);
+      });
+
+    // Second variant of implementation
+    /*this.subscription = this.inputControl.valueChanges.pipe(
+      delay(1000),
+      distinctUntilChanged(),
+      switchMap(value => {
+        this.updateValue(value);
+        return this.httpService.get('regions')
+      })
+    ).subscribe((countries: string[]) => {});*/
   }
 
   private handleGlobalClick(event: MouseEvent): void {

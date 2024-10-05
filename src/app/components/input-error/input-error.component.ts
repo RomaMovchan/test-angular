@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {CommonModule, KeyValue} from "@angular/common";
-import {ValidationErrors} from "@angular/forms";
-import {ErrorMessagePipe} from "./input-error.pipe";
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { CommonModule, KeyValue } from "@angular/common";
+import { ValidationErrors } from "@angular/forms";
+import { ErrorMessagePipe } from "./input-error.pipe";
 
 @Component({
   selector: 'input-error',

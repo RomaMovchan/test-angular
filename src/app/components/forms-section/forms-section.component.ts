@@ -12,8 +12,8 @@ import {JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {FormItemComponent} from "../form-item/form-item.component";
 import {currentDate, restrictedCountries} from "../../validators/validators";
 import {Country} from "../../shared/enum/country";
-import {NewUsernameValidator} from "../../services/new-username.validator";
-import {HttpService} from "../../services/http.service";
+import {NewUsernameValidator} from "../../services";
+import {HttpService} from "../../services";
 import {HttpClientModule} from "@angular/common/http";
 
 type TestForm = FormGroup<{
@@ -34,13 +34,10 @@ type TestForm = FormGroup<{
 export class FormsSectionComponent {
   private fb: FormBuilder = inject(FormBuilder);
   private httpService: HttpService = inject(HttpService);
+  private newUsernameValidator: NewUsernameValidator = inject(NewUsernameValidator);
 
   public formArray = new FormArray<TestForm>([]);
   public countries = Object.values(Country);
-
-  constructor(
-    private newUsernameValidator: NewUsernameValidator) {
-  }
 
   private registerFormGroup(): FormGroup {
     return this.fb.group({
