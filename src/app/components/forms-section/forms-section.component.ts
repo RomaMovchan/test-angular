@@ -83,7 +83,20 @@ export class FormsSectionComponent {
   }
 
   submit() {
-    this.httpService.post('submitForm', {}).subscribe(data => console.log(data))
+    this.formArray.disable();
+
+    this.httpService.post('submitForm', this.formArray.value).subscribe(data => {
+        console.log(data);
+        this.formArray.enable();
+    });
+  }
+
+  cancel() {
+    this.formArray.enable();
+  }
+
+  disable() {
+    this.formArray.disable();
   }
 
 }

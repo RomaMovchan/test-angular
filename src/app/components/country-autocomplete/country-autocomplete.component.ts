@@ -32,7 +32,6 @@ export class CountryAutocompleteComponent implements ControlValueAccessor, OnDes
   @HostListener('blur') onBlur(): void {
     this.onTouch();
   }
-  @Input() disabled: boolean = false;
   @Input() options: string[] = [];
   public filteredOptions: string[] = [];
   public isOpen: boolean = false;
@@ -116,7 +115,7 @@ export class CountryAutocompleteComponent implements ControlValueAccessor, OnDes
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    isDisabled ? this.inputControl.disable() : this.inputControl.enable();
     this.ref.markForCheck();
   }
 

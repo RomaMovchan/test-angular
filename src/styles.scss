@@ -36,12 +36,17 @@ button.primary {
   color: var(--color-text);
   font-weight: bold;
   border-radius: 5px;
-
   cursor: pointer;
+
   &:hover {
     opacity: 0.8;
   }
+}
 
+button.cancel {
+  background-color: var(--color-accent);
+  border: var(--color-accent) 1px solid;
+  color: var(--color-text);
 }
 
 input {

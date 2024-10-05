@@ -8,16 +8,23 @@
         Submit all forms
       </button>
 
+      <button class="primary cancel submit-button"
+              (click)="disable()">
+        disable
+      </button>
+
+      <button class="primary cancel submit-button"
+              (click)="cancel()">
+        enable
+      </button>
+
       <ng-container *ngIf="formArray.dirty">
         <span class="input-error"
               *ngIf="invalidFormsLength as count">
         Invalid forms: <strong>{{ count }}</strong>
       </span>
       </ng-container>
-
     </div>
-
-
 
   </header>
   <main>
