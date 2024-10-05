@@ -6,7 +6,6 @@ import {CheckUserResponseData, SubmitFormResponseData} from "../interface/respon
 @Injectable()
 export class MockBackendInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpResponse<CheckUserResponseData | SubmitFormResponseData>> {
-
     if (req.url.endsWith('/api/checkUsername') && req.method === 'POST') {
       return this.handleCheckUsername(req);
     }
@@ -18,6 +17,7 @@ export class MockBackendInterceptor implements HttpInterceptor {
   }
 
   private handleCheckUsername(req: HttpRequest<any>): Observable<HttpResponse<CheckUserResponseData>> {
+    console.log(req);
     const isAvailable = req.body.username.includes('new');
     const response = new HttpResponse({ status: 200, body: { isAvailable } });
 

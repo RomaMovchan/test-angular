@@ -31,6 +31,10 @@
 
     <ng-container *ngIf="getControl('username') as username">
       <div class="input-error" *ngIf="username.dirty && username.hasError('required')">This field is required</div>
+      <div class="input-error"
+           *ngIf="username.dirty && username.hasError('username')">
+        Please provide a correct Username
+      </div>
     </ng-container>
 
   </div>

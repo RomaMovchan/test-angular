@@ -12,6 +12,9 @@ import {JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {FormItemComponent} from "../form-item/form-item.component";
 import {currentDate, restrictedCountries} from "../../validators/validators";
 import {Country} from "../../shared/enum/country";
+import {NewUsernameValidator} from "../../services/new-username.validator";
+import {HttpService} from "../../services/http.service";
+import {HttpClientModule} from "@angular/common/http";
 
 type TestForm = FormGroup<{
   country: FormControl<string>;
@@ -22,25 +25,38 @@ type TestForm = FormGroup<{
 @Component({
   selector: 'app-forms-section',
   standalone: true,
-  imports: [ReactiveFormsModule, NgForOf, FormItemComponent, JsonPipe, NgIf],
+  imports: [ReactiveFormsModule, NgForOf, FormItemComponent, JsonPipe, NgIf, HttpClientModule],
   templateUrl: './forms-section.component.html',
   styleUrl: './forms-section.component.scss',
+  providers: [ NewUsernameValidator ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormsSectionComponent {
   private fb: FormBuilder = inject(FormBuilder);
+  private httpService: HttpService = inject(HttpService);
+
   public formArray = new FormArray<TestForm>([]);
   public countries = Object.values(Country);
 
+  constructor(
+    private newUsernameValidator: NewUsernameValidator) {
+  }
+
   private registerFormGroup(): FormGroup {
-    return <TestForm>this.fb.group({
+    return this.fb.group({
       country: ['', [
         Validators.required,
         restrictedCountries(this.countries)
       ]],
-      username: ['', [
-        Validators.required,
-      ]],
+      username: ['', {
+        validators: [
+          Validators.required
+        ],
+        asyncValidators: [
+          this.newUsernameValidator.validate.bind(this.newUsernameValidator)
+        ],
+       // updateOn: 'blur'
+      }],
       birthday: ['', [
         Validators.required,
         currentDate()
@@ -68,4 +84,9 @@ export class FormsSectionComponent {
   get isFormInvalid(): boolean {
     return !this.formArray.valid || !this.formArray.controls.length
   }
+
+  submit() {
+    this.httpService.post('submitForm', {}).subscribe(data => console.log(data))
+  }
+
 }

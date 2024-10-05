@@ -19,7 +19,7 @@ export function currentDate(): ValidatorFn {
     if (control.value) {
       const dateNow = new Date().getTime();
       const date = new Date(control.value).getTime();
-      return dateNow < date ? null : { dateError: true };
+      return dateNow > date ? null : { dateError: true };
     } else {
       return null;
     }
