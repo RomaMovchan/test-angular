@@ -17,11 +17,6 @@
 
     </div>
 
-    <div>
-      <button class="primary"
-              [disabled]="formArray.controls.length >= 10"
-              (click)="addItem()">Add</button>
-    </div>
 
 
   </header>
@@ -33,7 +28,9 @@
         (removeItemChange)="handleRemoveItem(i)">
       </app-form-item>
     </ng-container>
-
+    <button class="add-button"
+            [disabled]="formArray.controls.length >= 10"
+            (click)="addItem()">+</button>
   </main>
 
 </div>
