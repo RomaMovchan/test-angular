@@ -10,7 +10,7 @@ import {
 } from "@angular/forms";
 import {JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {FormItemComponent} from "../form-item/form-item.component";
-import {restrictedCountries} from "../../validators/validators";
+import {currentDate, restrictedCountries} from "../../validators/validators";
 import {Country} from "../../shared/enum/country";
 
 type TestForm = FormGroup<{
@@ -43,6 +43,7 @@ export class FormsSectionComponent {
       ]],
       birthday: ['', [
         Validators.required,
+        currentDate()
       ]]
     })
   }
@@ -65,7 +66,6 @@ export class FormsSectionComponent {
   }
 
   get isFormInvalid(): boolean {
-    console.log(this.formArray);
     return !this.formArray.valid || !this.formArray.controls.length
   }
 }

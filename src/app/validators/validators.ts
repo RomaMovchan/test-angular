@@ -11,6 +11,17 @@ export function restrictedCountries(countries: string[] = []): ValidatorFn {
     } else {
       return null;
     }
+  }
+}
 
+export function currentDate(): ValidatorFn {
+  return (control: AbstractControl<string | null>): ValidationErrors | null => {
+    if (control.value) {
+      const dateNow = new Date().getTime();
+      const date = new Date(control.value).getTime();
+      return dateNow < date ? null : { dateError: true };
+    } else {
+      return null;
+    }
   }
 }

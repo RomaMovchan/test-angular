@@ -12,7 +12,11 @@
            *ngIf="country.dirty && country.hasError('restrictedCountries')">
        Please provide a correct Country
       </div>
-      <div class="input-error" *ngIf="country.dirty && country.hasError('required')">This field is required</div>
+
+      <div class="input-error"
+           *ngIf="country.dirty && country.hasError('required')">
+        This field is required
+      </div>
     </ng-container>
 
   </div>
@@ -39,7 +43,14 @@
       id="birthday">
 
     <ng-container *ngIf="getControl('birthday') as birthday">
-      <div class="input-error" *ngIf="birthday.dirty && birthday.hasError('required')">This field is required</div>
+      <div class="input-error"
+           *ngIf="birthday.dirty && birthday.hasError('required')">
+        This field is required
+      </div>
+      <div class="input-error"
+           *ngIf="birthday.dirty && birthday.hasError('dateError')">
+        Please provide a correct Birthday
+      </div>
     </ng-container>
   </div>
 
