@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
-import {ControlContainer, FormGroupDirective, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
+import {AbstractControl, ControlContainer, FormGroupDirective, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CountryAutocompleteComponent} from "../country-autocomplete/country-autocomplete.component";
-import {Country} from "../../shared/enum/country";
+import {JsonPipe, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-form-item',
@@ -9,7 +9,9 @@ import {Country} from "../../shared/enum/country";
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    CountryAutocompleteComponent
+    CountryAutocompleteComponent,
+    NgIf,
+    JsonPipe
   ],
   templateUrl: './form-item.component.html',
   styleUrl: './form-item.component.scss',
@@ -18,8 +20,15 @@ import {Country} from "../../shared/enum/country";
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormItemComponent {
+export class FormItemComponent implements OnInit {
   @Output() removeItemChange = new EventEmitter<number>();
+  @Input() options: string[] = [];
+  public parentGroupDir = inject(ControlContainer);
 
-  public options = Object.values(Country);
+  ngOnInit() {
+  }
+
+  getControl(name: string): AbstractControl {
+    return this.parentGroupDir.control?.get(name) as AbstractControl;
+  }
 }

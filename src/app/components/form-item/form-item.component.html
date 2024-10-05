@@ -1,17 +1,46 @@
-<div class="form-section" >
-  <span class="remove-item" (click)="removeItemChange.emit()">X</span>
+<div class="form-section">
+  <span class="remove-item"
+        (click)="removeItemChange.emit()">X</span>
   <div class="form-field">
-    <app-country-autocomplete formControlName="country" [options]="options"></app-country-autocomplete>
+    <app-country-autocomplete
+      formControlName="country"
+      [options]="options">
+    </app-country-autocomplete>
+
+    <ng-container *ngIf="getControl('country') as country">
+      <div class="input-error"
+           *ngIf="country.dirty && country.hasError('restrictedCountries')">
+       Please provide a correct Country
+      </div>
+      <div class="input-error" *ngIf="country.dirty && country.hasError('required')">This field is required</div>
+    </ng-container>
+
   </div>
 
   <div class="form-field">
     <label for="username">Username</label>
-    <input formControlName="username" type="text" id="username" placeholder="Enter username">
+    <input
+      formControlName="username"
+      type="text"
+      id="username"
+      placeholder="Enter username">
+
+    <ng-container *ngIf="getControl('username') as username">
+      <div class="input-error" *ngIf="username.dirty && username.hasError('required')">This field is required</div>
+    </ng-container>
+
   </div>
 
   <div class="form-field">
     <label for="birthday">Birthday</label>
-    <input formControlName="birthday" type="date" id="birthday">
+    <input
+      formControlName="birthday"
+      type="date"
+      id="birthday">
+
+    <ng-container *ngIf="getControl('birthday') as birthday">
+      <div class="input-error" *ngIf="birthday.dirty && birthday.hasError('required')">This field is required</div>
+    </ng-container>
   </div>
 
 </div>

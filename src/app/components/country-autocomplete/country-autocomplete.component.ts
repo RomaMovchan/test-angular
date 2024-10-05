@@ -56,7 +56,7 @@ export class CountryAutocompleteComponent implements ControlValueAccessor, OnDes
     this.subscription = this.inputControl.valueChanges.subscribe(value => {
       this.updateValue(value);
       if (value) {
-        this.filteredOptions = this.options?.filter(option => option.toLowerCase().includes(value))
+        this.filteredOptions = this.options?.filter(option => option.toLowerCase().includes(value.toLowerCase()))
       } else {
         this.filteredOptions = [];
       }

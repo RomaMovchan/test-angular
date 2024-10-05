@@ -1,8 +1,18 @@
 <div class="">
   {{ formArray.value | json }}
   <header>
-    <button class="primary"
-            [disabled]="!formArray.valid || !formArray.controls.length">Submit all forms</button>
+    <div>
+      <button class="primary submit-button"
+              [disabled]="isFormInvalid">
+        Submit all forms
+      </button>
+
+      <span class="input-error"
+            *ngIf="invalidFormsLength as count">
+        Invalid forms: <strong>{{ count }}</strong>
+      </span>
+    </div>
+
     <div>
       <button class="primary"
               [disabled]="formArray.controls.length >= 10"
@@ -15,6 +25,7 @@
     <ng-container *ngFor="let item of formArray.controls; index as i">
       <app-form-item
         [formGroup]="getFormGroup(item)"
+        [options]="countries"
         (removeItemChange)="handleRemoveItem(i)">
       </app-form-item>
     </ng-container>

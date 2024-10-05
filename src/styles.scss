@@ -6,7 +6,7 @@
 :root {
   --color-primary: #0493B4FF;
   --color-accent: #ff8888;
-
+  --color-info: #449eff;
   --color-success: #4caf50;
   --color-error: #ff5722;
   --color-background: #eceff1;
@@ -31,7 +31,6 @@ label {
 }
 
 button.primary {
-  margin-top: calc(var(--spacing-step) * 2);
   background-color: var(--color-primary);
   border: var(--color-primary) 1px solid;
   color: var(--color-text);
@@ -59,10 +58,28 @@ button[disabled] {
   pointer-events: none;
 }
 
-.ng-valid.ng-dirty:not(app-form-item) input{
+
+.input-error {
+  color: var(--color-error);
+  font-size: 12px;
+}
+
+.submit-button {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.input-info {
+  color: var(--color-info);
+  font-size: 12px;
+}
+
+.ng-valid.ng-dirty:not(app-form-item):not(app-country-autocomplete),
+.ng-valid.ng-dirty:not(app-form-item) input {
   border: 2px solid var(--color-success);
 }
 
-.ng-invalid.ng-dirty:not(app-form-item) input{
+.ng-invalid.ng-dirty:not(app-form-item):not(app-country-autocomplete),
+.ng-invalid.ng-dirty:not(app-form-item) input {
   border: 2px solid var(--color-error);
 }
