@@ -1,7 +1,9 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
-import {AbstractControl, ControlContainer, FormGroupDirective, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CountryAutocompleteComponent} from "../country-autocomplete/country-autocomplete.component";
-import {JsonPipe, NgIf} from "@angular/common";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ControlContainer, FormGroupDirective, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CountryAutocompleteComponent } from "../country-autocomplete/country-autocomplete.component";
+import { NgIf } from "@angular/common";
+import { DynamicValidatorMessage } from "../../directives";
+import { OnTouchErrorStateMatcher } from "../../services";
 
 @Component({
   selector: 'app-form-item',
@@ -11,7 +13,7 @@ import {JsonPipe, NgIf} from "@angular/common";
     ReactiveFormsModule,
     CountryAutocompleteComponent,
     NgIf,
-    JsonPipe
+    DynamicValidatorMessage
   ],
   templateUrl: './form-item.component.html',
   styleUrl: './form-item.component.scss',
@@ -20,15 +22,9 @@ import {JsonPipe, NgIf} from "@angular/common";
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormItemComponent implements OnInit {
-  @Output() removeItemChange = new EventEmitter<number>();
+export class FormItemComponent {
   @Input() options: string[] = [];
-  public parentGroupDir = inject(ControlContainer);
+  @Output() removeItemChange = new EventEmitter<number>();
 
-  ngOnInit() {
-  }
-
-  getControl(name: string): AbstractControl {
-    return this.parentGroupDir.control?.get(name) as AbstractControl;
-  }
+  public showErrorStrategy = new OnTouchErrorStateMatcher();
 }
