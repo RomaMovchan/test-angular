@@ -111,8 +111,7 @@ export class CountryAutocompleteComponent implements ControlValueAccessor, OnDes
 
   writeValue(obj: string): void {
     if (obj === null) {
-      this.selectItem('');
-      this.inputControl.markAsPristine();
+      this.inputControl.reset();
     }
     this.onChange(obj);
     this.ref.markForCheck();

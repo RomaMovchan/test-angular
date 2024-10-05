@@ -17,8 +17,8 @@
         </button>
         <ng-container *ngIf="formArray.dirty">
           <span class="input-error"
-                *ngIf="invalidFormsLength as count">
-            Invalid forms: <strong>{{ count }}</strong>
+                *ngIf="formArray.invalid">
+            Invalid forms: <strong>{{ invalidFormsLength }}</strong>
           </span>
         </ng-container>
       </ng-template>

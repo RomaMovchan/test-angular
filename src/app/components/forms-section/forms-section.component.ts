@@ -147,7 +147,7 @@ export class FormsSectionComponent {
 
   resetForm() {
     this.formArray.reset();
-    this.formArray.markAsPristine();
-    this.formArray.markAsUntouched();
+    /*this.formArray.markAsPristine();
+    this.formArray.markAsUntouched();*/
   }
 }
