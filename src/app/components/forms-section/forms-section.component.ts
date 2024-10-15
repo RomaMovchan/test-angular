@@ -11,7 +11,7 @@ import {
 import { AsyncPipe, DatePipe, NgForOf, NgIf } from "@angular/common";
 
 import { HttpClientModule } from "@angular/common/http";
-import { finalize, map, Observable, share, takeWhile, timer } from "rxjs";
+import {finalize, map, Observable, share, Subject, Subscription, takeUntil, takeWhile, tap, timer} from "rxjs";
 import { SubmitFormResponseData } from "../../shared/interface/responses";
 import { FormItemComponent } from "../form-item/form-item.component";
 import { currentDate, restrictedCountries } from "../../validators/validators";
@@ -40,9 +40,10 @@ export class FormsSectionComponent {
   private fb: FormBuilder = inject(FormBuilder);
   private httpService: HttpService = inject(HttpService);
   private newUsernameValidator: NewUsernameValidator = inject(NewUsernameValidator);
-
+  private subject = new Subject();
   public formArray = new FormArray<TestForm>([]);
   public countries = Object.values(Country);
+  private httpSubscription: Subscription = new Subscription();
   public timer$: Observable<number> | null = new Observable<number>();
 
   private registerFormGroup(): FormGroup {
@@ -93,16 +94,18 @@ export class FormsSectionComponent {
       .pipe(
         share(),
         map(n => (TIMER - n) * 1000),
-
         takeWhile(n => n >= 0),
-        finalize(() => {
-          this.stopTimer();
-          this.submitForm();
+        tap(val => {
+          if (!val) {
+            this.stopTimer();
+            this.submitForm();
+          }
         })
       );
   }
 
   private stopTimer(): void {
+    this.subject.next('');
     this.timer$ = null;
   }
 
@@ -129,6 +132,7 @@ export class FormsSectionComponent {
   }
 
   cancel(): void {
+    this.httpSubscription.unsubscribe();
     this.stopTimer();
     this.enableForms();
   }
