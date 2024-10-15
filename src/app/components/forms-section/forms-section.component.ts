@@ -43,7 +43,6 @@ export class FormsSectionComponent {
   private subject = new Subject();
   public formArray = new FormArray<TestForm>([]);
   public countries = Object.values(Country);
-  private httpSubscription: Subscription = new Subscription();
   public timer$: Observable<number> | null = new Observable<number>();
 
   private registerFormGroup(): FormGroup {
@@ -132,7 +131,6 @@ export class FormsSectionComponent {
   }
 
   cancel(): void {
-    this.httpSubscription.unsubscribe();
     this.stopTimer();
     this.enableForms();
   }

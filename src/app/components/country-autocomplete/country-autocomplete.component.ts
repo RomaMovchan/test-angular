@@ -98,6 +98,7 @@ export class CountryAutocompleteComponent implements ControlValueAccessor, OnDes
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+    this.clickListener();
   }
 
   registerOnChange(fn: any): void {
